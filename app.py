@@ -34,3 +34,4 @@ def main():
         if st.session_state.get('is_logged_in') and st.session_state.get('user_role') == 'student':
             auto_enroll_dialog(join_code)
 main()
+main

@@ -1,5 +1,4 @@
-
-
+ 
 import dlib
 import numpy as np
 import face_recognition_models
@@ -105,3 +104,11 @@ def predict_attendance(class_image_np):
             detected_student[predicted_id] = True
     return detected_student, all_students, len(encodings)
 
+for encoding in encodings:
+    if len(all_studenmts)>=2:
+        predicted_id = int(clf.predict([encoding])[0])
+    else:
+        predicted_id = int(all_students[0])
+        student_embedding = X_train[y_train.index(predicted_id)]
+        best_match_score = np.linalg.norm(student_embedding - encoding)
+        
