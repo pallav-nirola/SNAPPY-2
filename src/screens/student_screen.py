@@ -62,8 +62,8 @@ def student_dashboard():
     cols = st.columns(2)
     for i, sub_node in enumerate(subjects):
         sub = sub_node['subjects']
-        sid = sub['subject_id']
-
+        sid = sub.get('subject_id') or sub.get('id') or (sub.get('subjects', {}).get('id') if isinstance(sub.get('subjects'), dict) else None)# sid = sub['subject_id']
+        
 
         stats = stats_map.get(sid,{"total":0, "attended": 0} )
         def unenroll_button():
