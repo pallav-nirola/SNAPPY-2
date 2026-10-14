@@ -37,11 +37,24 @@ def get_all_students():
     response = supabase.table('students').select("*").execute()
     return response.data
 
+# def create_student(new_name, face_embedding=None, voice_embedding=None):
+#     data = {'name': new_name, 'face_embedding':face_embedding, "voice_embedding": voice_embedding}
+#     response = supabase.table('students').insert(data).execute()
+#     return response.data
 def create_student(new_name, face_embedding=None, voice_embedding=None):
-    data = {'name': new_name, 'face_embedding':face_embedding, "voice_embedding": voice_embedding}
+    # Convert numpy arrays to lists for JSONB storage compatibility
+    if face_embedding is not None and hasattr(face_embedding, "tolist"):
+        face_embedding = face_embedding.tolist()
+    if voice_embedding is not None and hasattr(voice_embedding, "tolist"):
+        voice_embedding = voice_embedding.tolist()
+
+    data = {
+        'name': new_name, 
+        'face_embedding': face_embedding, 
+        "voice_embedding": voice_embedding
+    }
     response = supabase.table('students').insert(data).execute()
     return response.data
-
 
 def create_subject(subject_code, name, section, teacher_id):
     data = {"subject_code": subject_code, "name": name, "section": section, "teacher_id": teacher_id}
